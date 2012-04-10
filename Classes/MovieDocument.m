@@ -127,7 +127,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	return [[NSWorkspace sharedWorkspace] openURL:link];
 }
 
-- (IBAction)pluginAction:(id)plugin
+- (IBAction)pluginAction:(id <PluginProtocol>)plugin
 {
 	[plugin performSelector:@selector(execute:) withObject:[NSArray arrayWithObjects:movieArrayController, movieFilesArrayController, nil]];
 }
@@ -138,25 +138,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 	if ([sender state]) // blend detail in
 	{
-		[sender setFrame:NSMakeRect(17, 425, 13, 13)];
+		[(NSButton *)sender setFrame:NSMakeRect(17, 425, 13, 13)];
 		[seperator setFrame:NSMakeRect(38, 429, 719, 5)];
 		[infoTextField setFrame:NSMakeRect(18, 440, 745, 17)];
 		[mainMovieList setFrame:NSMakeRect(20, 468, r1.size.width - 40, r1.size.height - 566)];
 
 		[imdbBox setHidden:NO];
 		[dataBox setHidden:NO];
-		
 	}
 	else
 	{
-		[sender setFrame:NSMakeRect(17, 13, 13, 13)];
+		[(NSButton *)sender setFrame:NSMakeRect(17, 13, 13, 13)];
 		[seperator setFrame:NSMakeRect(38, 17, 719, 5)];
 		[infoTextField setFrame:NSMakeRect(18, 28, 745, 17)];
 		[mainMovieList setFrame:NSMakeRect(20, 50, r1.size.width - 40, r1.size.height - 148)];
 
 		[imdbBox setHidden:YES];
 		[dataBox setHidden:YES];
-		
 	}
 }
 
@@ -268,7 +266,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	
 	NSString *pluginPath = [[NSBundle mainBundle] pathForResource:@"ExportHTMLPlugin" ofType:@"plugin" inDirectory:@"PlugIns"];
 	NSBundle *pluginBundle = [NSBundle bundleWithPath:pluginPath];
-	id export;
+	id <HTMLProtocol>export;
 	NSString *html = nil;
 	[pluginBundle load];
 	

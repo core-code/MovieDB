@@ -13,14 +13,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 @interface MovieDocument : NSPersistentDocument
 {
+	IBOutlet NSArrayController		*movieArrayController;
+	IBOutlet NSArrayController		*movieFilesArrayController;
+	
+	
 	IBOutlet IMDBSheetController	*ourIMDBSheetController;
 
 	IBOutlet NSTextField			*titleTextField;
 	IBOutlet NSTextView				*castTextView, *imdbTitleTextView;
 	IBOutlet NSWindow				*progressSheetWindow;
 	IBOutlet NSPopUpButton			*languageListPopUpButton;
-	IBOutlet NSArrayController		*movieArrayController;
-	IBOutlet NSArrayController		*movieFilesArrayController;
+
 	IBOutlet NSProgressIndicator	*progressIndicator;
 
 	IBOutlet NSBox					*seperator;

@@ -13,39 +13,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 @implementation Movie
 
-- (void)awakeFromInsert
+- (NSInteger)totalSize
 {
-	[super awakeFromInsert];
-
-	[self addObserver:self forKeyPath:@"files" options:(NSKeyValueObservingOptionNew) context:nil];			
+    [self willAccessValueForKey:@"files"];
+	return [[self valueForKeyPath:@"files.@sum.size"] integerValue];
+	[self didAccessValueForKey:@"files"];
 }
-- (void)awakeFromFetch
+
+- (NSInteger)totalLength
 {
-	[self setTotalSize:[[self valueForKeyPath:@"files.@sum.size"] integerValue]];
-	[self setTotalLength:[[self valueForKeyPath:@"files.@sum.length"] integerValue]];	
+    [self willAccessValueForKey:@"files"];
+	return [[self valueForKeyPath:@"files.@sum.length"] integerValue];
+	[self didAccessValueForKey:@"files"];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{	
-	[self willAccessValueForKey:@"files"];
-	[self setTotalSize:[[self valueForKeyPath:@"files.@sum.size"] integerValue]];
-	[self setTotalLength:[[self valueForKeyPath:@"files.@sum.length"] integerValue]];
-
-	if ([[change objectForKey:NSKeyValueChangeKindKey] intValue] == NSKeyValueChangeRemoval)
-	{
-		if ([[self valueForKeyPath:@"files.@count"] integerValue] == 0)
-		{
-			[self setValue:nil forKey:@"file_container"];	
-			[self setValue:nil forKey:@"file_audio_codec"];
-			[self setValue:nil forKey:@"file_video_codec"];
-			[self setValue:nil forKey:@"file_video_width"];
-			[self setValue:nil forKey:@"file_video_height"];
-		}
-	}
-}
-
-@synthesize totalLength;
-@synthesize totalSize;
 
 @dynamic file_audio_codec;
 @dynamic file_container;
@@ -67,4 +48,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 @dynamic rating;
 @dynamic title;
 @dynamic files;
+
 @end

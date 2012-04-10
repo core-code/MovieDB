@@ -24,7 +24,20 @@
 #include <IOKit/ps/IOPSKeys.h>
 #include <IOKit/ps/IOPowerSources.h>
 
-id			imdb;
+@protocol IMDBPluginProtocol <NSObject>
+- (NSDictionary *)getInfoForID:(NSNumber *)num;
+- (NSArray *)searchForTitle:(NSString *)title;
+@end
+
+@protocol PluginProtocol <NSObject>
+- (void)execute:(NSArray *)params;
+@end
+
+@protocol HTMLProtocol <NSObject>
+- (NSString *)getHTML:(NSArray *)params;
+@end
+
+id	<IMDBPluginProtocol>		imdb;
 
 
 #define asl_NSLog(level, format, ...) asl_log(NULL, NULL, level, "%s", [[NSString stringWithFormat:format, ##__VA_ARGS__] UTF8String])

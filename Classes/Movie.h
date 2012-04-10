@@ -15,8 +15,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	NSInteger totalSize;	
 }
 
-@property (assign) NSInteger totalLength;
-@property (assign) NSInteger totalSize;
+@property (readonly) NSInteger totalLength;
+@property (readonly) NSInteger totalSize;
 
 @property (retain) NSString * file_audio_codec;
 @property (retain) NSString * file_container;

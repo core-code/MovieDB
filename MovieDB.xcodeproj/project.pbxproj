@@ -16,6 +16,7 @@
 		B90D08F6103EC5F4000B1C02 /* HostInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B90D08F5103EC5F4000B1C02 /* HostInformation.m */; };
 		B90D0907103EC643000B1C02 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B90D0906103EC643000B1C02 /* IOKit.framework */; };
 		B9408602153482FA0069BD0F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9408601153482FA0069BD0F /* WebKit.framework */; };
+		B94086071534BEB90069BD0F /* Credits.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = B94086061534BEB80069BD0F /* Credits.rtfd */; };
 		B94A180C152F143E006327B4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94A180B152F143E006327B4 /* SystemConfiguration.framework */; };
 		B9506B8C097EEE5A0058AF44 /* cdsize in Resources */ = {isa = PBXBuildFile; fileRef = B9506B8B097EEE5A0058AF44 /* cdsize */; };
 		B972B78C15333E1B00DEA2C5 /* ExportHTMLPlugin.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B972B78A15333E1900DEA2C5 /* ExportHTMLPlugin.plugin */; };
@@ -88,6 +89,7 @@
 		B90D08F5103EC5F4000B1C02 /* HostInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostInformation.m; sourceTree = "<group>"; };
 		B90D0906103EC643000B1C02 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		B9408601153482FA0069BD0F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../../../System/Library/Frameworks/WebKit.framework; sourceTree = "<group>"; };
+		B94086061534BEB80069BD0F /* Credits.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = Credits.rtfd; sourceTree = "<group>"; };
 		B94A180B152F143E006327B4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = ../../../../../System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<group>"; };
 		B9506B8B097EEE5A0058AF44 /* cdsize */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.sh; path = cdsize; sourceTree = "<group>"; };
 		B972B78A15333E1900DEA2C5 /* ExportHTMLPlugin.plugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ExportHTMLPlugin.plugin; path = "Export HTML Plug-In/dist/ExportHTMLPlugin.plugin"; sourceTree = SOURCE_ROOT; };
@@ -249,6 +251,7 @@
 		B9DE09AB0957A02C0027E5D7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B94086061534BEB80069BD0F /* Credits.rtfd */,
 				B9D535151530AAB80021D6F0 /* ExportHTMLPlugin.py */,
 				B972B78A15333E1900DEA2C5 /* ExportHTMLPlugin.plugin */,
 				B9D535131530A68E0021D6F0 /* ExamplePlugin.py */,
@@ -350,6 +353,7 @@
 				B9A4D69210923AB800E0AA11 /* search.png in Resources */,
 				B976A0A910F51CEA00120707 /* History.rtf in Resources */,
 				B976A0AA10F51CEA00120707 /* Read Me.rtf in Resources */,
+				B94086071534BEB90069BD0F /* Credits.rtfd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +443,33 @@
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wextra",
+					"-Wshift-overflow",
+					"-Wliteral-conversion",
+					"-Wbool-conversions",
+					"-Wdisabled-optimization",
+					"-Wendif-labels",
+					"-Winline",
+					"-Winvalid-pch",
+					"-Wliteral-conversion",
+					"-Wmissing-field-initializers",
+					"-Wmissing-format-attribute",
+					"-Wmissing-noreturn",
+					"-Wreturn-type",
+					"-Wmultichar",
+					"-Wshadow",
+					"-Wredundant-decls",
+					"-Wundef",
+					"-Wstrict-selector-match",
+					"-Wundeclared-selector",
+					"-Wshift-overflow",
+					"-Wsign-compare",
+					"-Wwrite-strings",
+					"-Wuninitialized",
+					"-Wpointer-arith",
+					"-Wunused-function",
+					"-Wunused-variable",
 					"-Wno-unused-parameter",
+					"-Wfloat-equal",
 				);
 			};
 			name = "Release-Deployment";
@@ -497,25 +527,33 @@
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wextra",
-					"-Wfloat-equal",
-					"-Wundef",
-					"-Wendif-labels",
-					"-Wshadow",
-					"-Wpointer-arith",
-					"-Wcast-align",
-					"-Wwrite-strings",
-					"-Wsign-compare",
-					"-Wmissing-field-initializers",
-					"-Wmissing-noreturn",
-					"-Wmissing-format-attribute",
-					"-Wmultichar",
-					"-Wredundant-decls",
-					"-Winline",
-					"-Wlong-long",
-					"-Wvariadic-macros",
+					"-Wshift-overflow",
+					"-Wliteral-conversion",
+					"-Wbool-conversions",
 					"-Wdisabled-optimization",
-					"-Wno-unused-parameter",
+					"-Wendif-labels",
+					"-Winline",
+					"-Winvalid-pch",
+					"-Wliteral-conversion",
+					"-Wmissing-field-initializers",
+					"-Wmissing-format-attribute",
+					"-Wmissing-noreturn",
+					"-Wreturn-type",
+					"-Wmultichar",
+					"-Wshadow",
+					"-Wredundant-decls",
+					"-Wundef",
 					"-Wstrict-selector-match",
+					"-Wundeclared-selector",
+					"-Wshift-overflow",
+					"-Wsign-compare",
+					"-Wwrite-strings",
+					"-Wuninitialized",
+					"-Wpointer-arith",
+					"-Wunused-function",
+					"-Wunused-variable",
+					"-Wno-unused-parameter",
+					"-Wfloat-equal",
 				);
 			};
 			name = Debug;
@@ -542,25 +580,33 @@
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wextra",
-					"-Wfloat-equal",
-					"-Wundef",
-					"-Wendif-labels",
-					"-Wshadow",
-					"-Wpointer-arith",
-					"-Wcast-align",
-					"-Wwrite-strings",
-					"-Wsign-compare",
-					"-Wmissing-field-initializers",
-					"-Wmissing-noreturn",
-					"-Wmissing-format-attribute",
-					"-Wmultichar",
-					"-Wredundant-decls",
-					"-Winline",
-					"-Wlong-long",
-					"-Wvariadic-macros",
+					"-Wshift-overflow",
+					"-Wliteral-conversion",
+					"-Wbool-conversions",
 					"-Wdisabled-optimization",
-					"-Wno-unused-parameter",
+					"-Wendif-labels",
+					"-Winline",
+					"-Winvalid-pch",
+					"-Wliteral-conversion",
+					"-Wmissing-field-initializers",
+					"-Wmissing-format-attribute",
+					"-Wmissing-noreturn",
+					"-Wreturn-type",
+					"-Wmultichar",
+					"-Wshadow",
+					"-Wredundant-decls",
+					"-Wundef",
 					"-Wstrict-selector-match",
+					"-Wundeclared-selector",
+					"-Wshift-overflow",
+					"-Wsign-compare",
+					"-Wwrite-strings",
+					"-Wuninitialized",
+					"-Wpointer-arith",
+					"-Wunused-function",
+					"-Wunused-variable",
+					"-Wno-unused-parameter",
+					"-Wfloat-equal",
 				);
 			};
 			name = Release;
