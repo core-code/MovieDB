@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
@@ -57,29 +57,29 @@
 	</dict>
 	<key>PyResourcePackages</key>
 	<array>
-		<string>lib/python2.7</string>
-		<string>lib/python2.7/lib-dynload</string>
-		<string>lib/python2.7/site-packages.zip</string>
+		<string>lib/python2.6</string>
+		<string>lib/python2.6/lib-dynload</string>
+		<string>lib/python2.6/site-packages.zip</string>
 	</array>
 	<key>PyRuntimeLocations</key>
 	<array>
-		<string>@executable_path/../Frameworks/Python.framework/Versions/2.7/Python</string>
+		<string>@executable_path/../Frameworks/Python.framework/Versions/2.6/Python</string>
 	</array>
 	<key>PythonInfoDict</key>
 	<dict>
 		<key>PythonExecutable</key>
 		<string>/usr/bin/python</string>
 		<key>PythonLongVersion</key>
-		<string>2.7.1 (r271:86832, Jun 16 2011, 16:59:05) 
-[GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]</string>
+		<string>2.6.1 (r261:67515, Jun 24 2010, 21:47:49) 
+[GCC 4.2.1 (Apple Inc. build 5646)]</string>
 		<key>PythonShortVersion</key>
-		<string>2.7</string>
+		<string>2.6</string>
 		<key>py2app</key>
 		<dict>
 			<key>template</key>
 			<string>bundle</string>
 			<key>version</key>
-			<string>0.5.3</string>
+			<string>0.4.2</string>
 		</dict>
 	</dict>
 </dict>
