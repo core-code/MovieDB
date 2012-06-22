@@ -291,8 +291,8 @@
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				B9769F6410F50ED800120707 /* CopyFiles */,
-				B9078F9C10F631D40091D0EF /* ShellScript */,
 				B9065617115D44ED00AA5980 /* CopyFiles */,
+				B9078F9C10F631D40091D0EF /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -360,13 +360,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B9078F9C10F631D40091D0EF /* ShellScript */ = {
+		B9078F9C10F631D40091D0EF /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;

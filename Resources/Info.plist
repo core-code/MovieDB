@@ -108,8 +108,8 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2005 - 2012, CoreCode.</string>
 	<key>CFBundleVersion</key>
-	<string>0.2</string>
+	<string>0.3</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0b2</string>
+	<string>1.0b3</string>
 </dict>
 </plist>
