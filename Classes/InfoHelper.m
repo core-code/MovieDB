@@ -10,49 +10,41 @@
  */
 
 #import "InfoHelper.h"
-#import "HostInformation.h"
+#import "JMHostInformation.h"
 
 
 @implementation InfoHelper
 
-+ (void)retrieveInfo:(NSNumber *)title forMovie:(id)movie
++ (void)retrieveInfo:(NSString *)imdbID forMovie:(id)movie
 {
-	NSDictionary *info = [imdb performSelector:@selector(getInfoForID:) withObject:title];
-	NSArray *itemarray = [NSArray arrayWithObjects:@"imdb_poster", @"imdb_rating", @"imdb_title", @"imdb_plot", @"imdb_year", @"imdb_director", @"imdb_writer", @"imdb_genre", @"imdb_cast", nil];
+    NSString *infoURL = makeString(@"https://www.omdbapi.com/?i=%@&y=&plot=full&r=json&type=movie", imdbID);
+    NSDictionary *info = infoURL.escaped.URL.download.JSONDictionary;
+
+    LOG(infoURL);
+	NSArray *itemarray = @[@"imdb_poster", @"imdb_rating", @"imdb_title", @"imdb_plot", @"imdb_year", @"imdb_director", @"imdb_writer", @"imdb_genre", @"imdb_cast"];
 	
-	for (uint32_t v = 0; v < [itemarray count]; v++) // set all items to nil
-		[movie setValue:nil forKey:[itemarray objectAtIndex:v]];	
+	for (uint32_t v = 0; v < itemarray.count; v++) // set all items to nil
+		[movie setValue:nil forKey:itemarray[v]];	
 	
-	if ([info objectForKey:@"imdb_cover_url"] != nil)
+	if (info[@"Poster"] != nil)
 	{
-		NSImage *image = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:[info objectForKey:@"imdb_cover_url"]]];
+		NSImage *image = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:info[@"Poster"]]];
 
 		[movie setValue:[image TIFFRepresentationUsingCompression:NSTIFFCompressionLZW factor:1.0] forKey:@"imdb_poster"];
-		[image release];
 	}
 	
-	[movie setValue:title forKey:@"imdb_id"];	
-	[movie setValue:[info objectForKey:@"imdb_rating"] forKey:@"imdb_rating"];
-	[movie setValue:[info objectForKey:@"imdb_title"] forKey:@"imdb_title"];
-	[movie setValue:[info objectForKey:@"imdb_plot"] forKey:@"imdb_plot"];
-	[movie setValue:[NSNumber numberWithInt:[[info objectForKey:@"imdb_year"] intValue]] forKey:@"imdb_year"];	
+	[movie setValue:imdbID forKey:@"imdb_id"];	
+	[movie setValue:@([info[@"imdbRating"] intValue]) forKey:@"imdb_rating"];
+	[movie setValue:info[@"Title"] forKey:@"imdb_title"];
+	[movie setValue:info[@"Plot"] forKey:@"imdb_plot"];
+	[movie setValue:@([info[@"Year"] intValue]) forKey:@"imdb_year"];
 	
-	NSArray *valuearray = [NSArray arrayWithObjects:@"imdb_writer", @"imdb_director", @"imdb_genre", @"imdb_cast", nil];
-	
-	for (uint32_t v = 0; v < [valuearray count]; v++)
-	{
-		NSArray *array = [info objectForKey:[valuearray objectAtIndex:v]];
-		NSMutableString *string = [NSMutableString string];
-		
-		for (uint32_t i = 0; i < [array count]; i++)
-		{
-			[string appendString:[array objectAtIndex:i]];
-			if ([array count] > i + 1)
-				[[valuearray objectAtIndex:v] isEqualToString:@"imdb_cast"] ? [string appendString:@"\n"] : [string appendString:@", "];
-		}		
-		[movie setValue:string forKey:[valuearray objectAtIndex:v]];
-	}
-	
+
+    [movie setValue:info[@"Genre"] forKey:@"imdb_genre"];
+    [movie setValue:[info[@"Actors"] stringByReplacingOccurrencesOfString:@", " withString:@"\n"]
+             forKey:@"imdb_cast"];
+    [movie setValue:info[@"Director"] forKey:@"imdb_director"];
+    [movie setValue:info[@"Writer"] forKey:@"imdb_writer"];	
 }
 
 
@@ -68,7 +60,7 @@
 	BOOL isFile = TRUE;
 	BOOL isDir = FALSE;
 	
-	if (([path length] > 9)&& [path hasPrefix:@"/Volumes/"])
+	if ((path.length > 9)&& [path hasPrefix:@"/Volumes/"])
 	{
 		NSRange range = [[path substringFromIndex:9] rangeOfString:@"/"];
 		
@@ -83,7 +75,7 @@
 			
 			isFile = FALSE;
 			
-			bsdPath = [HostInformation bsdPathForVolume:[path substringFromIndex:9]];
+			bsdPath = makeString(@"/dev/disk%@", [JMHostInformation bsdNumberForVolume:[path substringFromIndex:9]]);
 		}
 	}
 
@@ -92,28 +84,28 @@
 	
 	// 2. run midentify on the movie to add
 	id newObject = [movieFilesArrayController newObject];
-	NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+	NSString *resourcePath = [NSBundle mainBundle].resourcePath;
 	NSTask *task = [[NSTask alloc] init];	
 	NSPipe *pipe = [NSPipe pipe];
-	NSFileHandle *fileHandle = [pipe fileHandleForReading];
+	NSFileHandle *fileHandle = pipe.fileHandleForReading;
 	
-	[task setCurrentDirectoryPath: resourcePath];
-	[task setLaunchPath: [resourcePath stringByAppendingPathComponent:@"midentify"]];
-	[task setStandardOutput: pipe];	
+	task.currentDirectoryPath = resourcePath;
+	task.launchPath = [resourcePath stringByAppendingPathComponent:@"midentify"];
+	task.standardOutput = pipe;	
 	
 	if (isFile == TRUE)
-		[task setArguments: [NSArray arrayWithObjects: path, nil]];
+		task.arguments = @[path];
 	else if (isVCD == TRUE)
 	{
 		if ([[NSFileManager defaultManager] fileExistsAtPath:[path stringByAppendingString:@"/MPEGAV/AVSEQ01.DAT"]])
-			[task setArguments: [NSArray arrayWithObjects: [path stringByAppendingString:@"/MPEGAV/AVSEQ01.DAT"], nil]];
+			task.arguments = @[[path stringByAppendingString:@"/MPEGAV/AVSEQ01.DAT"]];
 		else
-			[task setArguments: [NSArray arrayWithObjects: @"vcd://1", @"-cdrom-device", bsdPath, nil]];
+			task.arguments = @[@"vcd://1", @"-cdrom-device", bsdPath];
 	}	
 	else if (isDVD == TRUE)
-		[task setArguments: [NSArray arrayWithObjects: @"dvd://1", @"-dvd-device", bsdPath, nil]];	
+		task.arguments = @[@"dvd://1", @"-dvd-device", bsdPath];	
 	else if (isSVCD == TRUE)
-		[task setArguments: [NSArray arrayWithObjects: @"vcd://1", @"-cdrom-device", bsdPath, nil]];
+		task.arguments = @[@"vcd://1", @"-cdrom-device", bsdPath];
 	
 	[task launch];
 	[task waitUntilExit];
@@ -124,81 +116,79 @@
 	
 	[fileHandle closeFile];
 	[task terminate];	
-	[string release];
-	[task release];
 	
 	// 3. parse output of midentify
-	for (uint32_t i = 0; i < [list count]; i++)
+	for (uint32_t i = 0; i < list.count; i++)
 	{
-		NSArray *components = [[list objectAtIndex:i] componentsSeparatedByString:@"="];
+		NSArray *components = [list[i] componentsSeparatedByString:@"="];
 		
-		if ([[components objectAtIndex:0] isEqualToString:@"ID_DEMUXER"])
+		if ([components[0] isEqualToString:@"ID_DEMUXER"])
 		{
-			if (([obj valueForKey:@"file_container"] == nil) || ([(NSString *)[obj valueForKey:@"file_container"] length] == 0))
-				[obj setValue:[components objectAtIndex:1] forKey:@"file_container"];
+			if (([obj valueForKey:@"file_container"] == nil) || (((NSString *)[obj valueForKey:@"file_container"]).length == 0))
+				[obj setValue:components[1] forKey:@"file_container"];
 		}
-		else if ([[components objectAtIndex:0] isEqualToString:@"ID_VIDEO_FORMAT"])
+		else if ([components[0] isEqualToString:@"ID_VIDEO_FORMAT"])
 		{
-			if (([obj valueForKey:@"file_video_codec"] == nil) || ([(NSString *)[obj valueForKey:@"file_video_codec"] length] == 0))
+			if (([obj valueForKey:@"file_video_codec"] == nil) || (((NSString *)[obj valueForKey:@"file_video_codec"]).length == 0))
 			{
-				if ([[components objectAtIndex:1] isEqualToString:@"0x10000001"])
+				if ([components[1] isEqualToString:@"0x10000001"])
 					[obj setValue:@"MPG1" forKey:@"file_video_codec"];				
-				else if ([[components objectAtIndex:1] isEqualToString:@"0x10000002"])
+				else if ([components[1] isEqualToString:@"0x10000002"])
 					[obj setValue:@"MPG2" forKey:@"file_video_codec"];								
 				else
-					[obj setValue:[components objectAtIndex:1] forKey:@"file_video_codec"];
+					[obj setValue:components[1] forKey:@"file_video_codec"];
 			}
 		}
-		else if ([[components objectAtIndex:0] isEqualToString:@"ID_VIDEO_WIDTH"])
+		else if ([components[0] isEqualToString:@"ID_VIDEO_WIDTH"])
 		{
 			if (([obj valueForKey:@"file_video_width"] == nil) || ([obj valueForKey:@"file_video_width"] == 0))
-				[obj setValue:[NSNumber numberWithInt:[[components objectAtIndex:1] intValue]] forKey:@"file_video_width"];
+				[obj setValue:@([components[1] intValue]) forKey:@"file_video_width"];
 		}
-		else if ([[components objectAtIndex:0] isEqualToString:@"ID_VIDEO_HEIGHT"])
+		else if ([components[0] isEqualToString:@"ID_VIDEO_HEIGHT"])
 		{
 			if (([obj valueForKey:@"file_video_height"] == nil) || ([obj valueForKey:@"file_video_height"] == 0))				
-				[obj setValue:[NSNumber numberWithInt:[[components objectAtIndex:1] intValue]] forKey:@"file_video_height"];
+				[obj setValue:@([components[1] intValue]) forKey:@"file_video_height"];
 		}
-		else if ([[components objectAtIndex:0] isEqualToString:@"ID_AUDIO_FORMAT"])
+		else if ([components[0] isEqualToString:@"ID_AUDIO_FORMAT"])
 		{
-			if (([obj valueForKey:@"file_audio_codec"] == nil) || ([(NSString *)[obj valueForKey:@"file_audio_codec"] length] == 0))
-				[obj setValue:[components objectAtIndex:1] forKey:@"file_audio_codec"];
+			if (([obj valueForKey:@"file_audio_codec"] == nil) || (((NSString *)[obj valueForKey:@"file_audio_codec"]).length == 0))
+				[obj setValue:components[1] forKey:@"file_audio_codec"];
 		}
-		else if ([[components objectAtIndex:0] isEqualToString:@"ID_LENGTH"])
+		else if ([components[0] isEqualToString:@"ID_LENGTH"])
 		{
-			int length = [[components objectAtIndex:1] intValue];
+			int length = [components[1] intValue];
 			
 			if (length > 0)
-				[newObject setValue:[NSNumber numberWithInt:length] forKey:@"length"];
+				[newObject setValue:@(length) forKey:@"length"];
 		}
-		else if ([[components objectAtIndex:0] isEqualToString:@"ID_VIDEO_BITRATE"])
+		else if ([components[0] isEqualToString:@"ID_VIDEO_BITRATE"])
 		{
 			static BOOL addedVideo = FALSE;
 			
 			if (!addedVideo)
 			{
-				byterate += [[components objectAtIndex:1] intValue] / 8;
+				byterate += [components[1] intValue] / 8;
 				addedVideo = TRUE;
 			}
 		}
-		else if ([[components objectAtIndex:0] isEqualToString:@"ID_AUDIO_BITRATE"])
+		else if ([components[0] isEqualToString:@"ID_AUDIO_BITRATE"])
 		{
 			static BOOL addedAudio = FALSE;
 			
 			if (!addedAudio)
 			{
-				byterate += [[components objectAtIndex:1] intValue] / 8;
+				byterate += [components[1] intValue] / 8;
 				addedAudio = TRUE;
 			}
 		}
 	}
 	
 	// 4. set title if it isn't set already
-	if (([obj valueForKey:@"title"] == nil) || ([(NSString *)[obj valueForKey:@"title"] length] == 0) || ([[obj valueForKey:@"title"] isEqualToString:@"Untitled Movie"]))
+	if (([obj valueForKey:@"title"] == nil) || (((NSString *)[obj valueForKey:@"title"]).length == 0) || ([[obj valueForKey:@"title"] isEqualToString:@"Untitled Movie"]))
 	{
-		NSString *title = [[path stringByDeletingPathExtension] lastPathComponent]; // this heuristic for cutting of postfixes like (cd 1) could be improved
+		NSString *title = path.stringByDeletingPathExtension.lastPathComponent; // this heuristic for cutting of postfixes like (cd 1) could be improved
 		NSArray *components = [title componentsSeparatedByString:@" ("];
-		title = [components objectAtIndex:0];
+		title = components[0];
 		
 		title = [title stringByReplacingOccurrencesOfString:@"." withString:@" "];
 		title = [title stringByReplacingOccurrencesOfString:@"_" withString:@" "];
@@ -212,17 +202,17 @@
 	// 5. determine size of movie
 	if ((isVCD == TRUE) || (isSVCD == TRUE))
 	{
-		(isVCD == TRUE) ? [obj setValue:[NSNumber numberWithInt:1] forKey:@"file_type"] : [obj setValue:[NSNumber numberWithInt:2] forKey:@"file_type"];
+		(isVCD == TRUE) ? [obj setValue:@1 forKey:@"file_type"] : [obj setValue:@2 forKey:@"file_type"];
 		
 		task = [[NSTask alloc] init];	
 		
-		[task setCurrentDirectoryPath: resourcePath];
-		[task setLaunchPath: [resourcePath stringByAppendingPathComponent:@"cdsize"]];
-		[task setArguments: [NSArray arrayWithObjects: bsdPath, nil]];
+		task.currentDirectoryPath = resourcePath;
+		task.launchPath = [resourcePath stringByAppendingPathComponent:@"cdsize"];
+		task.arguments = @[bsdPath];
 		
 		pipe = [NSPipe pipe];
-		[task setStandardOutput: pipe];	
-		fileHandle = [pipe fileHandleForReading];
+		task.standardOutput = pipe;	
+		fileHandle = pipe.fileHandleForReading;
 		
 		[task launch];
 		
@@ -233,17 +223,15 @@
 		
 		long size = 0;
 		
-		for (uint32_t i = 0; i < [list2 count]; i++)
+		for (uint32_t i = 0; i < list2.count; i++)
 		{
-			size += ([[list2 objectAtIndex:i] intValue] * 1024); // TODO: this doesn't have to be all MBs
+			size += ([list2[i] intValue] * 1024); // TODO: this doesn't have to be all MBs
 		}
 		
-		[newObject setValue:[NSNumber numberWithInt:size] forKey:@"size"];
+		[newObject setValue:@(size) forKey:@"size"];
 		
 		[fileHandle closeFile];
 		[task terminate];
-		[task release];
-		[str release];	
 	}
 	else if (isDVD == TRUE)
 	{
@@ -251,7 +239,7 @@
 		NSString *file, *fpath;
 		NSDictionary *fattrs;
 		
-		[obj setValue:[NSNumber numberWithInt:3] forKey:@"file_type"];	
+		[obj setValue:@3 forKey:@"file_type"];	
 		fpath = [path stringByAppendingString:@"/VIDEO_TS/"];
 		
 		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath: fpath];
@@ -271,43 +259,42 @@
 				size += [fattrs fileSize];			
 		}
 		
-		[newObject setValue:[NSNumber numberWithInteger:(NSInteger)(size / (long long)1024)] forKey:@"size"];
+		[newObject setValue:@((NSInteger)(size / (long long)1024)) forKey:@"size"];
 	}
 	else if (isFile == TRUE)
 	{
-		[obj setValue:[NSNumber numberWithInt:0] forKey:@"file_type"];
+		[obj setValue:@0 forKey:@"file_type"];
 		NSDictionary *fattrs = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:NULL];
 		
 		if (fattrs)
-			[newObject setValue:[NSNumber numberWithInt:[[fattrs objectForKey:NSFileSize] longValue] / 1024] forKey:@"size"];
+			[newObject setValue:@([fattrs[NSFileSize] longValue] / 1024) forKey:@"size"];
 	}
 	
 	// 6. calculate length if it wasn't given
 	if ((([newObject valueForKey:@"length"] == nil) || ([newObject valueForKey:@"length"] == 0)) && (byterate != 0))
 	{
-		int calulatedLength = [[newObject valueForKey:@"size"] longValue] / (byterate / 1024);
+		long calulatedLength = [[newObject valueForKey:@"size"] longValue] / (byterate / 1024);
 		
-		[newObject setValue:[NSNumber numberWithInt:calulatedLength] forKey:@"length"];
+		[newObject setValue:@(calulatedLength) forKey:@"length"];
 	}	
 
 	// 7. set remaining values and add new movie object
-	[newObject setValue:[[path stringByDeletingPathExtension] lastPathComponent] forKey:@"name"];
+	[newObject setValue:path.stringByDeletingPathExtension.lastPathComponent forKey:@"name"];
 	
 	NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
-	NSImage *smallIcon = [[[NSImage alloc] initWithSize:NSMakeSize(16, 16)] autorelease];
+	NSImage *smallIcon = [[NSImage alloc] initWithSize:NSMakeSize(16, 16)];
 	[smallIcon lockFocus];
-	[icon setScalesWhenResized:YES];
-	[icon setSize:NSMakeSize(16, 16)];
-	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+	icon.size = NSMakeSize(16, 16);
+	[NSGraphicsContext currentContext].imageInterpolation = NSImageInterpolationHigh;
 	[icon compositeToPoint:NSZeroPoint operation:NSCompositeCopy];
 	[smallIcon unlockFocus];
 	
 	[newObject setValue:[smallIcon TIFFRepresentationUsingCompression:NSTIFFCompressionLZW factor:0.5] forKey:@"icon"];
-	[newObject setValue:[path stringByDeletingLastPathComponent] forKey:@"path"];
+	[newObject setValue:path.stringByDeletingLastPathComponent forKey:@"path"];
 	
 	[movieFilesArrayController addObject:newObject];
 	
-	[newObject release]; // "new" -- returned with retain count of 1
+	 // "new" -- returned with retain count of 1
 	
 	return 0;
 }

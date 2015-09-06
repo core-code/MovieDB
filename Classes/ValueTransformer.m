@@ -88,11 +88,11 @@
 	return [NSString class];
 }
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
 	
-	NSString *languages = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"language_list.txt"] encoding:NSUTF8StringEncoding error:NULL];
+	NSString *languages = [NSString stringWithContentsOfFile:[[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"language_list.txt"] encoding:NSUTF8StringEncoding error:NULL];
 	
 	NSMutableArray *ma = [NSMutableArray arrayWithArray:[languages componentsSeparatedByString:@"\n"]];
 	[ma insertObject:@"" atIndex:5];
@@ -101,12 +101,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[la release];
-	
-	[super dealloc];
-}
 
 - (id)transformedValue:(id)value
 {
@@ -120,7 +114,7 @@
 	if (intvalue == 0)
 		return nil;
 	
-	return [la objectAtIndex:intvalue-1];
+	return la[intvalue-1];
 }
 @end
 
@@ -161,27 +155,27 @@
 		[NSException raise: NSInternalInconsistencyException format: @"Value (%@) does not respond to -valueForKey.", [obj class]];
 		
 	NSString *title = [obj valueForKey:@"imdb_title"];
-	NSNumber *imdb_id =  [obj valueForKey:@"imdb_id"];
+	NSString *imdb_id =  [obj valueForKey:@"imdb_id"];
 	
 	if (!title) return nil;
-	if (!imdb_id) return [[[NSAttributedString alloc] initWithString:title] autorelease];
+	if (!imdb_id) return [[NSAttributedString alloc] initWithString:title];
 	
-	NSMutableAttributedString *string = [[[NSMutableAttributedString alloc] initWithString:title] autorelease];
-	NSRange selectedRange = NSMakeRange(0, [string length]);
+	NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:title];
+	NSRange selectedRange = NSMakeRange(0, string.length);
 	
 	[string beginEditing];
 	[string addAttribute:NSLinkAttributeName
-				   value:[NSURL URLWithString:[[NSString stringWithFormat:@"http://www.imdb.com/title/tt%@/", [imdb_id stringValue]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]
+				   value:[NSURL URLWithString:[[NSString stringWithFormat:@"http://www.imdb.com/title/%@/", imdb_id.stringValue] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]
 				   range:selectedRange];
 	[string addAttribute:NSForegroundColorAttributeName
 				   value:[NSColor blueColor]
 				   range:selectedRange];
 	[string addAttribute:NSUnderlineStyleAttributeName
-				   value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
+				   value:@(NSUnderlineStyleSingle)
 				   range:selectedRange];
 	[string endEditing];
 	
-	return [[[NSAttributedString alloc] initWithAttributedString:string] autorelease];
+	return [[NSAttributedString alloc] initWithAttributedString:string];
 }
 @end
 
@@ -208,8 +202,10 @@
 	for (component in components)
 	{
 		NSMutableAttributedString *substring = [[NSMutableAttributedString alloc] initWithString:component];
-		NSRange selectedRange = NSMakeRange(0, [substring length]);
-		
+		NSRange selectedRange = NSMakeRange(0, substring.length);
+
+        component = [component componentsSeparatedByString:@" ("][0];
+
 		[substring beginEditing];
 		[substring addAttribute:NSLinkAttributeName
 						  value:[NSURL URLWithString:[[NSString stringWithFormat:@"http://www.imdb.com/find?s=nm&q=%@", component] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]
@@ -218,19 +214,18 @@
 						  value:[NSColor blueColor]
 						  range:selectedRange];
 		[substring addAttribute:NSUnderlineStyleAttributeName
-						  value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
+						  value:@(NSUnderlineStyleSingle)
 						  range:selectedRange];
 		[substring endEditing];
 		
-		if ([string length] > 0)
-			[string appendAttributedString:[[[NSAttributedString alloc] initWithString:@", "] autorelease]];
+		if (string.length > 0)
+			[string appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
 		
 		[string appendAttributedString:substring];				
 		
-		[substring release];
 	}
 	
-	return [string autorelease];
+	return string;
 }
 /*
 - (id)reverseTransformedValue:(id)value
@@ -264,36 +259,35 @@
 	for (component in components)
 	{
 		NSArray *subcomponents = [component componentsSeparatedByString:@" ("];
-		NSMutableAttributedString *substring = [[NSMutableAttributedString alloc] initWithString:[subcomponents objectAtIndex:0]];
-		NSRange selectedRange = NSMakeRange(0, [substring length]);
+		NSMutableAttributedString *substring = [[NSMutableAttributedString alloc] initWithString:subcomponents[0]];
+		NSRange selectedRange = NSMakeRange(0, substring.length);
 		
 		[substring beginEditing];
 		[substring addAttribute:NSLinkAttributeName
-						  value:[NSURL URLWithString:[[NSString stringWithFormat:@"http://www.imdb.com/find?s=nm&q=%@", [subcomponents objectAtIndex:0]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]
+						  value:[NSURL URLWithString:[[NSString stringWithFormat:@"http://www.imdb.com/find?s=nm&q=%@", subcomponents[0]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]
 						  range:selectedRange];
 		[substring addAttribute:NSForegroundColorAttributeName
 						  value:[NSColor blueColor]
 						  range:selectedRange];
 		[substring addAttribute:NSUnderlineStyleAttributeName
-						  value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
+						  value:@(NSUnderlineStyleSingle)
 						  range:selectedRange];
 		[substring endEditing];
 		
-		if ([string length] > 0)
-			[[string mutableString] appendString:@"\n"];
+		if (string.length > 0)
+			[string.mutableString appendString:@"\n"];
 		
 		[string appendAttributedString:substring];
 		
-		if ([subcomponents count] > 1)
+		if (subcomponents.count > 1)
 		{
-			[string appendAttributedString:[[[NSAttributedString alloc] initWithString:@" ("] autorelease]];
-			[[string mutableString] appendString:[subcomponents objectAtIndex:1]];			
+			[string appendAttributedString:[[NSAttributedString alloc] initWithString:@" ("]];
+			[string.mutableString appendString:subcomponents[1]];			
 		}
 		
-		[substring release];
 	}
 	
-	return [string autorelease];
+	return string;
 }
 /*
 - (id)reverseTransformedValue:(id)value
@@ -320,8 +314,8 @@
 {
 	if (value == nil) return nil;
 	
-	NSMutableAttributedString *string = [[[NSMutableAttributedString alloc] initWithString:[value stringValue]] autorelease];
-	NSRange selectedRange = NSMakeRange(0, [string length]);
+	NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[value stringValue]];
+	NSRange selectedRange = NSMakeRange(0, string.length);
 	
 	[string beginEditing];
 	[string addAttribute:NSLinkAttributeName
@@ -331,11 +325,11 @@
 				   value:[NSColor blueColor]
 				   range:selectedRange];
 	[string addAttribute:NSUnderlineStyleAttributeName
-				   value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
+				   value:@(NSUnderlineStyleSingle)
 				   range:selectedRange];
 	[string endEditing];
 	
-	return [[[NSAttributedString alloc] initWithAttributedString:string] autorelease];
+	return [[NSAttributedString alloc] initWithAttributedString:string];
 }
 /*
 - (id)reverseTransformedValue:(id)value
@@ -362,19 +356,19 @@
 {
 	if (value == nil) return nil;
 	
-	NSMutableAttributedString *string = [[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%1.1f", [value floatValue]]] autorelease];
-	NSRange selectedRange = NSMakeRange(0, [string length]);
+	NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%1.1f", [value floatValue]]];
+	NSRange selectedRange = NSMakeRange(0, string.length);
 	NSString *lower;
 	NSString *higher;
 	
 	if (fmodf([value floatValue], 1.0) > 0.5)
 	{
-		lower = [[[NSNumber numberWithInt:(int)[value floatValue]] stringValue] stringByAppendingString:@".5"];
-		higher = [[NSNumber numberWithInt:((int)[value floatValue]) + 1] stringValue];
+		lower = [@((int)[value floatValue]).stringValue stringByAppendingString:@".5"];
+		higher = @(((int)[value floatValue]) + 1).stringValue;
 	}
 	else
 	{
-		lower = [[NSNumber numberWithInt:(int)[value floatValue]] stringValue];
+		lower = @((int)[value floatValue]).stringValue;
 		higher = [lower stringByAppendingString:@".5"];
 	}
 	
@@ -387,11 +381,11 @@
 				   value:[NSColor blueColor]
 				   range:selectedRange];
 	[string addAttribute:NSUnderlineStyleAttributeName
-				   value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
+				   value:@(NSUnderlineStyleSingle)
 				   range:selectedRange];
 	[string endEditing];
 	
-	return [[[NSAttributedString alloc] initWithAttributedString:string] autorelease];
+	return [[NSAttributedString alloc] initWithAttributedString:string];
 }
 /*
 - (id)reverseTransformedValue:(id)value
@@ -418,12 +412,12 @@
 {
 	if (value == nil) return nil;
 	
-	NSMutableAttributedString *string = [[[NSMutableAttributedString alloc] initWithString:value] autorelease];
+	NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:value];
 	int index = 0;
 	
 	for (NSString *component in [value componentsSeparatedByString:@" | "])
 	{
-		NSRange selectedRange = NSMakeRange(index, [component length]);
+		NSRange selectedRange = NSMakeRange(index, component.length);
 		
 		[string beginEditing];
 		[string addAttribute:NSLinkAttributeName
@@ -433,15 +427,15 @@
 					   value:[NSColor blueColor]
 					   range:selectedRange];
 		[string addAttribute:NSUnderlineStyleAttributeName
-					   value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
+					   value:@(NSUnderlineStyleSingle)
 					   range:selectedRange];
 		[string endEditing];
 		
-		index += [component length] + 3;
+		index += component.length + 3;
 	}
 	
 	
-	return [[[NSAttributedString alloc] initWithAttributedString:string] autorelease];
+	return [[NSAttributedString alloc] initWithAttributedString:string];
 }
 /*
 - (id)reverseTransformedValue:(id)value
@@ -472,7 +466,7 @@
 	NSImage *image = [[NSImage alloc] initWithData:value];
 	
 	if (image)
-		return [image autorelease];
+		return image;
 	else 
 		return nil;
 }
@@ -492,11 +486,11 @@
 
 - (id)transformedValue:(id)value
 {
-	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"MP3", @"85", @"MP3", @"80", @"AC3", @"8192", @"DTS", @"8193", @"WMA2", @"353", @"PCM", @"1", @"ADPCM", @"2", @"ADPCM", @"17", nil];
+	NSDictionary *dict = @{@"85": @"MP3", @"80": @"MP3", @"8192": @"AC3", @"8193": @"DTS", @"353": @"WMA2", @"1": @"PCM", @"2": @"ADPCM", @"17": @"ADPCM"};
 	if (value == nil) return nil;
 	
-	if ([dict objectForKey:value])
-		return [dict objectForKey:value];
+	if (dict[value])
+		return dict[value];
 	else
 		return [value uppercaseString];
 }

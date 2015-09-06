@@ -18,26 +18,30 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 @property (readonly) NSInteger totalLength;
 @property (readonly) NSInteger totalSize;
 
-@property (retain) NSString * file_audio_codec;
-@property (retain) NSString * file_container;
-@property (retain) NSNumber * file_type;
-@property (retain) NSString * file_video_codec;
-@property (retain) NSNumber * file_video_height;
-@property (retain) NSNumber * file_video_width;
-@property (retain) NSString * imdb_cast;
-@property (retain) NSString * imdb_director;
-@property (retain) NSString * imdb_genre;
-@property (retain) NSNumber * imdb_id;
-@property (retain) NSString * imdb_plot;
-@property (retain) NSData * imdb_poster;
-@property (retain) NSNumber * imdb_rating;
-@property (retain) NSString * imdb_title;
-@property (retain) NSString * imdb_writer;
-@property (retain) NSNumber * imdb_year;
-@property (retain) NSNumber * language;
-@property (retain) NSNumber * rating;
-@property (retain) NSString * title;
-@property (retain) NSSet* files;
+@property (strong) NSString * file_audio_codec;
+@property (strong) NSString * file_container;
+@property (strong) NSNumber * file_type;
+@property (strong) NSString * file_video_codec;
+@property (strong) NSNumber * file_video_height;
+@property (strong) NSNumber * file_video_width;
+@property (strong) NSString * imdb_cast;
+@property (strong) NSString * imdb_director;
+@property (strong) NSString * imdb_genre;
+@property (strong) NSString * imdb_id;
+@property (strong) NSString * imdb_plot;
+@property (strong) NSData * imdb_poster;
+@property (strong) NSNumber * imdb_rating;
+@property (strong) NSString * imdb_title;
+@property (strong) NSString * imdb_writer;
+@property (strong) NSNumber * imdb_year;
+@property (strong) NSNumber * language;
+@property (strong) NSNumber * rating;
+@property (strong) NSString * title;
+@property (strong) NSSet* files;
+
+
+- (NSDictionary *)dictionaryRepresentation;
+
 @end
 
 @interface Movie (CoreDataGeneratedAccessors)

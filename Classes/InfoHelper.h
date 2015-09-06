@@ -10,10 +10,9 @@
  */
 
 
-@interface InfoHelper : NSObject {
-
-}
+@interface InfoHelper : NSObject
 
 + (char)addPathToObject:(NSManagedObject *)obj withPath:(NSString *)path andFilesController:(NSArrayController *)movieFilesArrayController;
-+ (void)retrieveInfo:(NSNumber *)title forMovie:(id)movie;
++ (void)retrieveInfo:(NSString *)imdbID forMovie:(id)movie;
+
 @end

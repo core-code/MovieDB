@@ -9,7 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 #import "Movie.h"
-@class IMDBSheetController;
+#import "IMDBSheetController.h"
 
 @interface MovieDocument : NSPersistentDocument
 {

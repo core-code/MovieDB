@@ -10,13 +10,14 @@
 
 #import "IMDBSheetController.h"
 #import "InfoHelper.h"
+#import "MovieDocument.h"
 
 @implementation IMDBSheetController
 
 - (void)awakeFromNib
 {
 	//[imdbTableView setTarget:self];
-	[imdbTableView setDoubleAction:@selector(selectAction:)];
+	imdbTableView.doubleAction = @selector(selectAction:);
 	
 	[super awakeFromNib];
 }	
@@ -25,7 +26,7 @@
 
 - (IBAction)lookupAction:(id)sender
 {
-	[imdbTitleTextField setStringValue:[[movieArrayController selection] valueForKey:@"title"]];
+	imdbTitleTextField.stringValue = [movieArrayController.selection valueForKey:@"title"];
 	
 	[NSApp beginSheet:imdbSheetWindow modalForWindow:[owner windowForSheet] modalDelegate:nil didEndSelector:nil contextInfo:nil];
 
@@ -35,72 +36,83 @@
 - (IBAction)searchAgainAction:(id)sender
 {
 	[progressIndicator startAnimation:self];
-	
+    [progressIndicator setUsesThreadedAnimation:YES];
+
 	if ([sender isKindOfClass:[NSString class]])
 	{
-		[imdbTitleTextField setStringValue:sender];
+		imdbTitleTextField.stringValue = sender;
 		[NSApp beginSheet:imdbSheetWindow modalForWindow:[owner windowForSheet] modalDelegate:nil didEndSelector:nil contextInfo:nil];
 	}
-	
-	if (answers != nil)
-	{
-		[answers release];
-		answers = nil;
-	}
-	
-	answers = [[imdb performSelector:@selector(searchForTitle:) withObject:[imdbTitleTextField stringValue]] retain];
+
+
+
+    NSString *infoURL = makeString(@"https://www.omdbapi.com/?s=%@&r=json&type=movie", imdbTitleTextField.stringValue);
+    LOG(infoURL);
+    NSDictionary *info = infoURL.escaped.URL.download.JSONDictionary;
+    LOG(info);
+    answers = info[@"Search"];
 	
 	[imdbTableView reloadData];
 	
 	[progressIndicator stopAnimation:self];
 }
 
-- (IBAction)selectAction:(id)sender
+- (IBAction)selectAction:(NSButton *)sender
 {
-	if ([[sender title] isEqualToString:@"Select"])
+	if ([sender.title isEqualToString:@"Select"])
 	{
-		NSNumber *num;
-		if ([imdbButtonCell state] == NSOnState)
+        if (!answers.count) return;
+
+		NSString *imdbID;
+		if (imdbButtonCell.state == NSOnState)
 		{		
-			num = [[answers objectAtIndex:1] objectAtIndex:[imdbTableView selectedRow]];
-		}
+			imdbID = answers[imdbTableView.selectedRow][@"imdbID"];
+
+            assert([imdbID hasPrefix:@"tt"]);
+        }
 		else
 		{
-			int imdbNumber = [[imdbDefineTextField stringValue] intValue];
+			int imdbNumber = imdbDefineTextField.stringValue.intValue;
 			if (imdbNumber == 0)
 			{
-				NSArray *list = [NSArray arrayWithArray:[[imdbDefineTextField stringValue] componentsSeparatedByString:@"/"]];
+				NSArray *list = [NSArray arrayWithArray:[imdbDefineTextField.stringValue componentsSeparatedByString:@"/"]];
 				
 				for (NSString *component in list)
 				{
 					if ([component hasPrefix:@"tt"])
 					{
-						imdbNumber = [[component substringFromIndex:2] intValue];
+                        imdbID = component;
 						break;
 					}
 				}
 				
-				if (imdbNumber == 0)
+				if (!imdbID.length)
 				{
 					NSBeep();
 					return;
 				}
 			}
-			[defineButtonCell setState:NSOffState];
-			[imdbButtonCell setState:NSOnState];
-			num = [NSNumber numberWithInt:imdbNumber];
+            else
+            {
+                NSString *prefix = @"tt0000000";
+
+
+                imdbID = [[prefix substringToIndex:9 - imdbDefineTextField.stringValue.length] stringByAppendingString:imdbDefineTextField.stringValue];
+            }
+			defineButtonCell.state = NSOffState;
+			imdbButtonCell.state = NSOnState;
 		}
 		
 		[NSApp endSheet:imdbSheetWindow];
 		[imdbSheetWindow orderOut:self];
 		
 		
-		[owner doProgressSheet:YES];
+		[((MovieDocument *)owner) doProgressSheet:YES];
 		
-		[InfoHelper retrieveInfo:num forMovie:[movieArrayController selection]];
+		[InfoHelper retrieveInfo:imdbID forMovie:movieArrayController.selection];
 		
 		[movieArrayController rearrangeObjects];
-		[owner tableViewSelectionDidChange:nil];
+		[((MovieDocument *)owner) tableViewSelectionDidChange:nil];
 
 		[owner doProgressSheet:NO];
 	}
@@ -110,7 +122,6 @@
 		[imdbSheetWindow orderOut:self];	
 	}
 	
-	[answers release];
 	answers = nil;
 }
 
@@ -121,13 +132,15 @@
 
 #pragma mark *** NSTableDataSource protocol-methods ***
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	return [(NSArray *)[answers objectAtIndex:0] count];
+    return answers.count;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row
 {
-	return [[answers objectAtIndex:0] objectAtIndex:row];
+	NSDictionary *answer = answers[row];
+
+    return makeString(@"%@ (%@)", answer[@"Title"], answer[@"Year"]);
 }
 @end

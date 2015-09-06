@@ -16,17 +16,26 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 - (NSInteger)totalSize
 {
     [self willAccessValueForKey:@"files"];
-	return [[self valueForKeyPath:@"files.@sum.size"] integerValue];
+	NSInteger size = [[self valueForKeyPath:@"files.@sum.size"] integerValue];
 	[self didAccessValueForKey:@"files"];
+    return size;
 }
 
 - (NSInteger)totalLength
 {
     [self willAccessValueForKey:@"files"];
-	return [[self valueForKeyPath:@"files.@sum.length"] integerValue];
+	NSInteger length = [[self valueForKeyPath:@"files.@sum.length"] integerValue];
 	[self didAccessValueForKey:@"files"];
+    return length;
 }
 
+- (NSDictionary *)dictionaryRepresentation
+{
+    NSArray *keys = @[@"file_audio_codec", @"file_container", @"file_type", @"file_video_codec", @"file_video_height", @"file_video_width", @"imdb_cast", @"imdb_director", @"imdb_genre", @"imdb_id", @"imdb_plot", @"imdb_rating", @"imdb_title", @"imdb_writer", @"imdb_year", @"language", @"rating", @"title"];
+    NSDictionary *dict = [self dictionaryWithValuesForKeys:keys];
+
+    return dict;
+}
 
 @dynamic file_audio_codec;
 @dynamic file_container;

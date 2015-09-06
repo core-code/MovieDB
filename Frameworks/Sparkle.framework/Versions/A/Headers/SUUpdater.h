@@ -22,25 +22,19 @@
 
 + (SUUpdater *)sharedUpdater;
 + (SUUpdater *)updaterForBundle:(NSBundle *)bundle;
-- (NSBundle *)hostBundle;
+@property (nonatomic, readonly, strong) NSBundle *hostBundle;
 
-- (void)setDelegate:(id)delegate;
-- (id)delegate;
+@property (nonatomic, assign) id delegate;
 
-- (void)setAutomaticallyChecksForUpdates:(BOOL)automaticallyChecks;
-- (BOOL)automaticallyChecksForUpdates;
+@property (nonatomic) BOOL automaticallyChecksForUpdates;
 
-- (void)setUpdateCheckInterval:(NSTimeInterval)interval;
-- (NSTimeInterval)updateCheckInterval;
+@property (nonatomic) NSTimeInterval updateCheckInterval;
 
-- (void)setFeedURL:(NSURL *)feedURL;
-- (NSURL *)feedURL;
+@property (nonatomic, copy) NSURL *feedURL;
 
-- (void)setSendsSystemProfile:(BOOL)sendsSystemProfile;
-- (BOOL)sendsSystemProfile;
+@property (nonatomic) BOOL sendsSystemProfile;
 
-- (void)setAutomaticallyDownloadsUpdates:(BOOL)automaticallyDownloadsUpdates;
-- (BOOL)automaticallyDownloadsUpdates;
+@property (nonatomic) BOOL automaticallyDownloadsUpdates;
 
 // This IBAction is meant for a main menu item. Hook up any menu item to this action,
 // and Sparkle will check for updates and report back its findings verbosely.
@@ -52,7 +46,7 @@
 - (void)checkForUpdatesInBackground;
 
 // Date of last update check. Returns null if no check has been performed.
-- (NSDate*)lastUpdateCheckDate;
+@property (nonatomic, readonly, copy) NSDate *lastUpdateCheckDate;
 
 // This begins a "probing" check for updates which will not actually offer to update to that version. The delegate methods, though,
 // (up to updater:didFindValidUpdate: and updaterDidNotFindUpdate:), are called, so you can use that information in your UI.
@@ -61,7 +55,7 @@
 // Call this to appropriately schedule or cancel the update checking timer according to the preferences for time interval and automatic checks. This call does not change the date of the next check, but only the internal NSTimer.
 - (void)resetUpdateCycle;
 
-- (BOOL)updateInProgress;
+@property (nonatomic, readonly) BOOL updateInProgress;
 @end
 
 @interface NSObject (SUUpdaterDelegateInformalProtocol)

@@ -10,6 +10,9 @@
     #import <Cocoa/Cocoa.h>
 #endif
 
+#define USE_DISKARBITRATION 1
+#import "CoreLib.h"
+
 #include <asl.h>
 
 #include <sys/types.h>
@@ -24,24 +27,7 @@
 #include <IOKit/ps/IOPSKeys.h>
 #include <IOKit/ps/IOPowerSources.h>
 
-@protocol IMDBPluginProtocol <NSObject>
-- (NSDictionary *)getInfoForID:(NSNumber *)num;
-- (NSArray *)searchForTitle:(NSString *)title;
-@end
 
-@protocol PluginProtocol <NSObject>
-- (void)execute:(NSArray *)params;
-@end
-
-@protocol HTMLProtocol <NSObject>
-- (NSString *)getHTML:(NSArray *)params;
-@end
-
-id	<IMDBPluginProtocol>		imdb;
-
-
-#define asl_NSLog(level, format, ...) asl_log(NULL, NULL, level, "%s", [[NSString stringWithFormat:format, ##__VA_ARGS__] UTF8String])
 
 #define kAgreedToIMDBConditionsKey		@"agreedToIMDBConditions"
 #define kUpdatecheckMenuindexKey		@"updatecheckMenuindex"
-#define kBetaNoticeKey					@"betaNotice"
