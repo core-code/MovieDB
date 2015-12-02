@@ -273,7 +273,8 @@
 				B9A2EEEF109275E300A9E131 /* InfoHelper.h */,
 				B9A2EEF0109275E300A9E131 /* InfoHelper.m */,
 			);
-			path = Classes;
+			name = Classes;
+			path = MovieDB;
 			sourceTree = "<group>";
 		};
 		B9DE09A70957A01E0027E5D7 /* Other Sources */ = {
