@@ -38,7 +38,7 @@ without permission.
 
 **Website:**
 
-[www.corecode.at/moviedb](http://www.corecode.at/moviedb/)  
+[www.corecode.at/moviedb](https://www.corecode.at/moviedb/)  
 
 
 **License & Cost:**
