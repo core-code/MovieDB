@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8121.20" systemVersion="15A204h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1060" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8121.20"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -29,7 +29,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -43,7 +43,6 @@
                     <textField verticalHuggingPriority="750" id="162">
                         <rect key="frame" x="18" y="440" width="863" height="17"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" alignment="left" id="2521">
                             <font key="font" metaFont="label"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -71,9 +70,8 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" autosaveName="movieTable" headerView="2579" id="173">
-                                    <rect key="frame" x="0.0" y="0.0" width="856" height="143"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="856" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -84,7 +82,7 @@
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="F5E4475E-E501-4B43-959E-44049F2365C9" id="1155"/>
+                                            <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="40A9BD79-258B-412A-BCEC-C25A9137D2C2" id="1155"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
                                                 <binding destination="92" name="value" keyPath="arrangedObjects.imdb_poster" id="2627">
@@ -269,7 +267,7 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
-                                                <binding destination="92" name="displayPatternValue1" keyPath="arrangedObjects.file_video_width" id="2185">
+                                                <binding destination="92" name="displayPatternValue2" keyPath="arrangedObjects.file_video_height" previousBinding="2185" id="2186">
                                                     <dictionary key="options">
                                                         <string key="NSDisplayPattern">%{value1}@x%{value2}@</string>
                                                         <string key="NSMultipleValuesPlaceholder"></string>
@@ -279,7 +277,7 @@
                                                         <bool key="NSRaisesForNotApplicableKeys" value="YES"/>
                                                     </dictionary>
                                                 </binding>
-                                                <binding destination="92" name="displayPatternValue2" keyPath="arrangedObjects.file_video_height" previousBinding="2185" id="2186">
+                                                <binding destination="92" name="displayPatternValue1" keyPath="arrangedObjects.file_video_width" id="2185">
                                                     <dictionary key="options">
                                                         <string key="NSDisplayPattern">%{value1}@x%{value2}@</string>
                                                         <string key="NSMultipleValuesPlaceholder"></string>
@@ -304,6 +302,12 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
+                                                <binding destination="92" name="displayPatternValue3" keyPath="arrangedObjects.file_audio_codec" previousBinding="2742" id="2744">
+                                                    <dictionary key="options">
+                                                        <string key="NSDisplayPattern">%{value1}@ (%{value2}@|%{value3}@)</string>
+                                                        <string key="NSValueTransformerName">AudioCodecValueTransformer</string>
+                                                    </dictionary>
+                                                </binding>
                                                 <binding destination="92" name="displayPatternValue1" keyPath="arrangedObjects.file_container" id="2739">
                                                     <dictionary key="options">
                                                         <string key="NSDisplayPattern">%{value1}@ (%{value2}@|%{value3}@)</string>
@@ -312,12 +316,6 @@
                                                 <binding destination="92" name="displayPatternValue2" keyPath="arrangedObjects.file_video_codec" previousBinding="2739" id="2742">
                                                     <dictionary key="options">
                                                         <string key="NSDisplayPattern">%{value1}@ (%{value2}@|%{value3}@)</string>
-                                                    </dictionary>
-                                                </binding>
-                                                <binding destination="92" name="displayPatternValue3" keyPath="arrangedObjects.file_audio_codec" previousBinding="2742" id="2744">
-                                                    <dictionary key="options">
-                                                        <string key="NSDisplayPattern">%{value1}@ (%{value2}@|%{value3}@)</string>
-                                                        <string key="NSValueTransformerName">AudioCodecValueTransformer</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -329,24 +327,19 @@
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <animations/>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <animations/>
-                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="2578">
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2578">
                             <rect key="frame" x="1" y="151" width="836" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2577">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2577">
                             <rect key="frame" x="837" y="17" width="15" height="134"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                         <tableHeaderView key="headerView" id="2579">
                             <rect key="frame" x="0.0" y="0.0" width="856" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </tableHeaderView>
                     </scrollView>
                     <box title="Data/Sources" id="245">
@@ -359,7 +352,6 @@
                                 <textField verticalHuggingPriority="750" id="98">
                                     <rect key="frame" x="2" y="15" width="102" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Codecs:" id="2523">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -369,13 +361,18 @@
                                 <textField verticalHuggingPriority="750" id="99">
                                     <rect key="frame" x="108" y="13" width="124" height="22"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" borderStyle="bezel" alignment="left" drawsBackground="YES" id="2524">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
+                                        <binding destination="92" name="displayPatternValue3" keyPath="selection.file_audio_codec" previousBinding="1208" id="2745">
+                                            <dictionary key="options">
+                                                <string key="NSDisplayPattern">%{value1}@ (%{value2}@|%{value3}@)</string>
+                                                <string key="NSValueTransformerName">AudioCodecValueTransformer</string>
+                                            </dictionary>
+                                        </binding>
                                         <binding destination="92" name="displayPatternValue1" keyPath="selection.file_container" id="1207">
                                             <dictionary key="options">
                                                 <string key="NSDisplayPattern">%{value1}@ (%{value2}@|%{value3}@)</string>
@@ -386,18 +383,11 @@
                                                 <string key="NSDisplayPattern">%{value1}@ (%{value2}@|%{value3}@)</string>
                                             </dictionary>
                                         </binding>
-                                        <binding destination="92" name="displayPatternValue3" keyPath="selection.file_audio_codec" previousBinding="1208" id="2745">
-                                            <dictionary key="options">
-                                                <string key="NSDisplayPattern">%{value1}@ (%{value2}@|%{value3}@)</string>
-                                                <string key="NSValueTransformerName">AudioCodecValueTransformer</string>
-                                            </dictionary>
-                                        </binding>
                                     </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" id="101">
                                     <rect key="frame" x="2" y="301" width="68" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Sources:" id="2525">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -407,7 +397,6 @@
                                 <textField verticalHuggingPriority="750" id="105">
                                     <rect key="frame" x="2" y="79" width="102" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Total Length:" id="2526">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -417,7 +406,6 @@
                                 <textField verticalHuggingPriority="750" id="109">
                                     <rect key="frame" x="2" y="111" width="102" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Total Size:" id="2527">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -427,7 +415,6 @@
                                 <textField verticalHuggingPriority="750" id="116">
                                     <rect key="frame" x="2" y="47" width="102" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Dimensions:" id="2528">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -437,19 +424,18 @@
                                 <textField verticalHuggingPriority="750" id="292">
                                     <rect key="frame" x="108" y="45" width="124" height="22"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" borderStyle="bezel" alignment="left" drawsBackground="YES" id="2529">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
-                                        <binding destination="92" name="displayPatternValue1" keyPath="selection.file_video_width" id="2723">
+                                        <binding destination="92" name="displayPatternValue2" keyPath="selection.file_video_height" previousBinding="2723" id="2724">
                                             <dictionary key="options">
                                                 <string key="NSDisplayPattern">%{value1}@ x %{value2}@</string>
                                             </dictionary>
                                         </binding>
-                                        <binding destination="92" name="displayPatternValue2" keyPath="selection.file_video_height" previousBinding="2723" id="2724">
+                                        <binding destination="92" name="displayPatternValue1" keyPath="selection.file_video_width" id="2723">
                                             <dictionary key="options">
                                                 <string key="NSDisplayPattern">%{value1}@ x %{value2}@</string>
                                             </dictionary>
@@ -459,7 +445,6 @@
                                 <textField verticalHuggingPriority="750" id="337">
                                     <rect key="frame" x="108" y="109" width="124" height="22"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" borderStyle="bezel" alignment="left" drawsBackground="YES" id="2530">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -477,7 +462,6 @@
                                 <button id="404">
                                     <rect key="frame" x="188" y="230" width="23" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                    <animations/>
                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2531">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -490,7 +474,6 @@
                                 <button id="405">
                                     <rect key="frame" x="210" y="230" width="22" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                    <animations/>
                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2532">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -508,9 +491,8 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="414">
-                                                <rect key="frame" x="0.0" y="0.0" width="223" height="58"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="223" height="19"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <animations/>
                                                 <size key="intercellSpacing" width="3" height="2"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -521,7 +503,7 @@
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                                         </tableHeaderCell>
-                                                        <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="F5E4475E-E501-4B43-959E-44049F2365C9" id="706"/>
+                                                        <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="40A9BD79-258B-412A-BCEC-C25A9137D2C2" id="706"/>
                                                         <connections>
                                                             <binding destination="486" name="value" keyPath="arrangedObjects.icon" id="2629">
                                                                 <dictionary key="options">
@@ -551,19 +533,15 @@
                                                 </connections>
                                             </tableView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </clipView>
-                                    <animations/>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="2581">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2581">
                                         <rect key="frame" x="-100" y="-100" width="223" height="15"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2580">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2580">
                                         <rect key="frame" x="-30" y="1" width="15" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
                                     <connections>
                                         <binding destination="486" name="toolTip" keyPath="selection.path" id="2634"/>
@@ -572,7 +550,6 @@
                                 <textField verticalHuggingPriority="750" id="440">
                                     <rect key="frame" x="2" y="174" width="102" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Language:" id="2533">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -582,7 +559,6 @@
                                 <textField verticalHuggingPriority="750" id="441">
                                     <rect key="frame" x="2" y="202" width="102" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Rating:" id="2534">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -592,7 +568,6 @@
                                 <textField verticalHuggingPriority="750" id="442">
                                     <rect key="frame" x="2" y="363" width="68" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Title:" id="2535">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -602,7 +577,6 @@
                                 <textField verticalHuggingPriority="750" id="443">
                                     <rect key="frame" x="75" y="326" width="157" height="54"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" selectable="YES" editable="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" id="2536">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -622,10 +596,9 @@ IA
                                 <popUpButton verticalHuggingPriority="750" id="444">
                                     <rect key="frame" x="105" y="196" width="130" height="26"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
                                     <popUpButtonCell key="cell" type="push" title=" " bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="450" id="2537">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="menu"/>
                                         <menu key="menu" title="OtherViews" id="445">
                                             <items>
                                                 <menuItem title=" " state="on" id="450"/>
@@ -644,10 +617,9 @@ IA
                                 <popUpButton verticalHuggingPriority="750" id="452">
                                     <rect key="frame" x="105" y="168" width="130" height="26"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
                                     <popUpButtonCell key="cell" type="push" title=" " bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="454" id="2538">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="menu"/>
                                         <menu key="menu" title="OtherViews" id="453">
                                             <items>
                                                 <menuItem title=" " state="on" id="454"/>
@@ -661,7 +633,6 @@ IA
                                 <textField verticalHuggingPriority="750" id="536">
                                     <rect key="frame" x="108" y="77" width="124" height="22"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" borderStyle="bezel" alignment="left" drawsBackground="YES" id="2539">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -679,7 +650,6 @@ IA
                                 <textField verticalHuggingPriority="750" id="610">
                                     <rect key="frame" x="39" y="228" width="144" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" id="2540">
                                         <font key="font" metaFont="miniSystem"/>
                                         <string key="title">Drag movie files/volumes here 
@@ -691,7 +661,6 @@ or use the buttons: </string>
                                 <textField verticalHuggingPriority="750" id="680">
                                     <rect key="frame" x="2" y="146" width="102" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Type:" id="2541">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -701,10 +670,9 @@ or use the buttons: </string>
                                 <popUpButton verticalHuggingPriority="750" id="681">
                                     <rect key="frame" x="105" y="140" width="130" height="26"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
                                     <popUpButtonCell key="cell" type="push" title="File" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="687" id="2542">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="menu"/>
                                         <menu key="menu" title="OtherViews" id="682">
                                             <items>
                                                 <menuItem title="File" state="on" id="687"/>
@@ -715,6 +683,11 @@ or use the buttons: </string>
                                         </menu>
                                     </popUpButtonCell>
                                     <connections>
+                                        <binding destination="486" name="enabled" keyPath="canRemove" id="716">
+                                            <dictionary key="options">
+                                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                            </dictionary>
+                                        </binding>
                                         <binding destination="92" name="enabled2" keyPath="canRemove" previousBinding="716" id="1034">
                                             <dictionary key="options">
                                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -723,18 +696,11 @@ or use the buttons: </string>
                                                 <integer key="NSNullPlaceholder" value="-1"/>
                                             </dictionary>
                                         </binding>
-                                        <binding destination="486" name="enabled" keyPath="canRemove" id="716">
-                                            <dictionary key="options">
-                                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                            </dictionary>
-                                        </binding>
                                         <binding destination="92" name="selectedIndex" keyPath="selection.file_type" id="712"/>
                                     </connections>
                                 </popUpButton>
                             </subviews>
-                            <animations/>
                         </view>
-                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
@@ -755,7 +721,6 @@ or use the buttons: </string>
                                             <textView editable="NO" importsGraphics="NO" richText="NO" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" smartInsertDelete="YES" id="727">
                                                 <rect key="frame" x="0.0" y="0.0" width="499" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <animations/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="minSize" width="499" height="16"/>
@@ -768,46 +733,7 @@ CQ
                                                         <attributes>
                                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <font key="NSFont" size="12" name="Helvetica-Oblique"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
-                                                                <tabStops>
-                                                                    <textTab alignment="left" location="28">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="56">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="84">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="112">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="140">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="168">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="196">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="224">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="252">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="280">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="308">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="336">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                </tabStops>
-                                                            </paragraphStyle>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
                                                 </attributedString>
@@ -826,25 +752,20 @@ CQ
                                                 </connections>
                                             </textView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </clipView>
-                                    <animations/>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2587">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2587">
                                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2586">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2586">
                                         <rect key="frame" x="-100" y="-100" width="15" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
                                 </scrollView>
                                 <textField verticalHuggingPriority="750" id="124">
                                     <rect key="frame" x="135" y="301" width="75" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Director(s):" id="2543">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -854,7 +775,6 @@ CQ
                                 <textField verticalHuggingPriority="750" id="127">
                                     <rect key="frame" x="0.0" y="273" width="79" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Genres:" id="2544">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -864,7 +784,6 @@ CQ
                                 <textField verticalHuggingPriority="750" id="130">
                                     <rect key="frame" x="0.0" y="301" width="79" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Rating:" id="2545">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -874,7 +793,6 @@ CQ
                                 <textField verticalHuggingPriority="750" id="134">
                                     <rect key="frame" x="0.0" y="357" width="79" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Title:" id="2546">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -884,7 +802,6 @@ CQ
                                 <textField verticalHuggingPriority="750" id="137">
                                     <rect key="frame" x="0.0" y="329" width="79" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Year:" id="2547">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -894,7 +811,6 @@ CQ
                                 <textField verticalHuggingPriority="750" id="429">
                                     <rect key="frame" x="202" y="158" width="36" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Cast:" id="2548">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -904,7 +820,6 @@ CQ
                                 <imageView id="431">
                                     <rect key="frame" x="81" y="8" width="120" height="170"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="2549"/>
                                     <connections>
                                         <binding destination="92" name="value" keyPath="selection.imdb_poster" id="2632">
@@ -917,7 +832,6 @@ CQ
                                 <textField verticalHuggingPriority="750" id="432">
                                     <rect key="frame" x="12" y="158" width="66" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Poster:" id="2550">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -927,7 +841,6 @@ CQ
                                 <textField verticalHuggingPriority="750" id="434">
                                     <rect key="frame" x="0.0" y="246" width="79" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Plot:" id="2551">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -944,7 +857,6 @@ CQ
                                             <textView editable="NO" selectable="NO" importsGraphics="NO" richText="NO" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" smartInsertDelete="YES" id="437">
                                                 <rect key="frame" x="0.0" y="0.0" width="499" height="78"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="minSize" width="499" height="78"/>
                                                 <size key="maxSize" width="1000" height="10000000"/>
@@ -970,19 +882,15 @@ CQ
                                                 </connections>
                                             </textView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </clipView>
-                                    <animations/>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2583">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2583">
                                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2582">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2582">
                                         <rect key="frame" x="-30" y="1" width="15" height="162"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
                                 </scrollView>
                                 <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="689">
@@ -995,7 +903,6 @@ CQ
                                             <textView editable="NO" importsGraphics="NO" richText="NO" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" smartInsertDelete="YES" id="690">
                                                 <rect key="frame" x="0.0" y="0.0" width="340" height="162"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="minSize" width="340" height="162"/>
                                                 <size key="maxSize" width="682" height="10000000"/>
@@ -1022,19 +929,15 @@ CQ
                                                 </connections>
                                             </textView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </clipView>
-                                    <animations/>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2585">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2585">
                                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2584">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2584">
                                         <rect key="frame" x="-30" y="1" width="15" height="162"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
                                 </scrollView>
                                 <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="1163">
@@ -1047,7 +950,6 @@ CQ
                                             <textView editable="NO" importsGraphics="NO" richText="NO" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" smartInsertDelete="YES" id="1164">
                                                 <rect key="frame" x="0.0" y="0.0" width="367" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="minSize" width="367" height="16"/>
                                                 <size key="maxSize" width="736" height="10000000"/>
@@ -1074,25 +976,20 @@ CQ
                                                 </connections>
                                             </textView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </clipView>
-                                    <animations/>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2589">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2589">
                                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2588">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2588">
                                         <rect key="frame" x="-100" y="-100" width="15" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
                                 </scrollView>
                                 <textField verticalHuggingPriority="750" id="1176">
                                     <rect key="frame" x="135" y="330" width="75" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" alignment="right" title="Writer(s):" id="2553">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1109,7 +1006,6 @@ CQ
                                             <textView editable="NO" importsGraphics="NO" richText="NO" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" smartInsertDelete="YES" id="1178">
                                                 <rect key="frame" x="0.0" y="0.0" width="367" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="minSize" width="367" height="16"/>
                                                 <size key="maxSize" width="736" height="10000000"/>
@@ -1136,19 +1032,15 @@ CQ
                                                 </connections>
                                             </textView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </clipView>
-                                    <animations/>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2591">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2591">
                                         <rect key="frame" x="-100" y="-100" width="247" height="15"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2590">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2590">
                                         <rect key="frame" x="-100" y="-100" width="15" height="17"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
                                 </scrollView>
                                 <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="1297">
@@ -1161,7 +1053,6 @@ CQ
                                             <textView editable="NO" importsGraphics="NO" richText="NO" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" smartInsertDelete="YES" id="1300">
                                                 <rect key="frame" x="0.0" y="0.0" width="43" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="minSize" width="43" height="16"/>
                                                 <size key="maxSize" width="368" height="10000000"/>
@@ -1188,19 +1079,15 @@ CQ
                                                 </connections>
                                             </textView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </clipView>
-                                    <animations/>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2593">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2593">
                                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2592">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2592">
                                         <rect key="frame" x="-100" y="-100" width="15" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
                                 </scrollView>
                                 <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="1385">
@@ -1213,7 +1100,6 @@ CQ
                                             <textView editable="NO" importsGraphics="NO" richText="NO" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" smartInsertDelete="YES" id="1388">
                                                 <rect key="frame" x="0.0" y="0.0" width="42" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="minSize" width="42" height="16"/>
                                                 <size key="maxSize" width="368" height="10000000"/>
@@ -1240,19 +1126,15 @@ CQ
                                                 </connections>
                                             </textView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </clipView>
-                                    <animations/>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2595">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2595">
                                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2594">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2594">
                                         <rect key="frame" x="-100" y="-100" width="15" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
                                 </scrollView>
                                 <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="1477">
@@ -1265,7 +1147,6 @@ CQ
                                             <textView editable="NO" importsGraphics="NO" richText="NO" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" smartInsertDelete="YES" id="1480">
                                                 <rect key="frame" x="0.0" y="0.0" width="498" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="minSize" width="498" height="16"/>
                                                 <size key="maxSize" width="998" height="10000000"/>
@@ -1292,32 +1173,25 @@ CQ
                                                 </connections>
                                             </textView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </clipView>
-                                    <animations/>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2597">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2597">
                                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2596">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2596">
                                         <rect key="frame" x="-100" y="-100" width="15" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
                                     </scroller>
                                 </scrollView>
                             </subviews>
-                            <animations/>
                         </view>
-                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="261">
                         <rect key="frame" x="38" y="429" width="837" height="5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -1325,7 +1199,6 @@ CQ
                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="1133">
                         <rect key="frame" x="17" y="425" width="13" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                         <buttonCell key="cell" type="disclosureTriangle" bezelStyle="disclosure" imagePosition="above" alignment="left" state="on" borderStyle="border" inset="2" id="2557">
                             <behavior key="behavior" pushIn="YES" changeBackground="YES" changeGray="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1337,13 +1210,13 @@ CQ
                     <button verticalHuggingPriority="750" id="438">
                         <rect key="frame" x="359" y="200" width="501" height="82"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <animations/>
                         <buttonCell key="cell" type="smallSquare" title="Fetch Data from IMDb…" bezelStyle="smallSquare" imagePosition="left" alignment="center" state="on" borderStyle="border" inset="2" id="2552">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="22"/>
                         </buttonCell>
                         <connections>
                             <action selector="lookupAction:" target="2693" id="2703"/>
+                            <binding destination="92" name="enabled" keyPath="canRemove" id="721"/>
                             <binding destination="92" name="enabled2" keyPath="selection.title" previousBinding="721" id="723">
                                 <dictionary key="options">
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1353,13 +1226,11 @@ CQ
                                     <string key="NSValueTransformerName">NSIsNotNil</string>
                                 </dictionary>
                             </binding>
-                            <binding destination="92" name="enabled" keyPath="canRemove" id="721"/>
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="2737">
                         <rect key="frame" x="273" y="1" width="383" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="The data displayed here is under copyright © 1990 - 2010 MDb.com, Inc. DO NOT USE WITHOUT PERMISSION!" id="2738">
                             <font key="font" metaFont="system" size="7"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1367,7 +1238,6 @@ CQ
                         </textFieldCell>
                     </textField>
                 </subviews>
-                <animations/>
             </view>
             <toolbar key="toolbar" implicitIdentifier="E7615344-784A-4F7B-8D48-546DFCACFE43" explicitIdentifier="reload" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="2637">
                 <allowedToolbarItems>
@@ -1408,23 +1278,16 @@ CQ
                         <searchField key="view" verticalHuggingPriority="750" id="2665">
                             <rect key="frame" x="0.0" y="14" width="334" height="22"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <animations/>
                             <searchFieldCell key="cell" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" alignment="left" placeholderString="All" bezelStyle="round" id="2666">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </searchFieldCell>
                             <connections>
-                                <binding destination="92" name="predicate10" keyPath="filterPredicate" previousBinding="2675" id="2676">
+                                <binding destination="92" name="predicate" keyPath="filterPredicate" id="2667">
                                     <dictionary key="options">
-                                        <string key="NSDisplayName">Video Codec</string>
-                                        <string key="NSPredicateFormat">file_video_codec contains[c] $value</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="92" name="predicate11" keyPath="filterPredicate" previousBinding="2676" id="2677">
-                                    <dictionary key="options">
-                                        <string key="NSDisplayName">Audio Codec</string>
-                                        <string key="NSPredicateFormat">file_audio_codec contains[c] $value</string>
+                                        <string key="NSDisplayName">All</string>
+                                        <string key="NSPredicateFormat">(title contains[c] $value) or (imdb_director contains[c] $value) or (imdb_genre contains[c] $value) or (imdb_cast contains[c] $value) or (imdb_plot contains[c] $value) or (imdb_title contains[c] $value) or (imdb_year.description contains[c] $value) or (file_container contains[c] $value) or (file_video_codec contains[c] $value) or (file_audio_codec contains[c] $value)</string>
                                     </dictionary>
                                 </binding>
                                 <binding destination="92" name="predicate2" keyPath="filterPredicate" previousBinding="2667" id="2668">
@@ -1475,10 +1338,16 @@ CQ
                                         <string key="NSPredicateFormat">file_container contains[c] $value</string>
                                     </dictionary>
                                 </binding>
-                                <binding destination="92" name="predicate" keyPath="filterPredicate" id="2667">
+                                <binding destination="92" name="predicate10" keyPath="filterPredicate" previousBinding="2675" id="2676">
                                     <dictionary key="options">
-                                        <string key="NSDisplayName">All</string>
-                                        <string key="NSPredicateFormat">(title contains[c] $value) or (imdb_director contains[c] $value) or (imdb_genre contains[c] $value) or (imdb_cast contains[c] $value) or (imdb_plot contains[c] $value) or (imdb_title contains[c] $value) or (imdb_year.description contains[c] $value) or (file_container contains[c] $value) or (file_video_codec contains[c] $value) or (file_audio_codec contains[c] $value)</string>
+                                        <string key="NSDisplayName">Video Codec</string>
+                                        <string key="NSPredicateFormat">file_video_codec contains[c] $value</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="92" name="predicate11" keyPath="filterPredicate" previousBinding="2676" id="2677">
+                                    <dictionary key="options">
+                                        <string key="NSDisplayName">Audio Codec</string>
+                                        <string key="NSPredicateFormat">file_audio_codec contains[c] $value</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -1610,7 +1479,6 @@ CQ
                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="389">
                         <rect key="frame" x="18" y="88" width="196" height="266"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <animations/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="196" height="18"/>
                         <size key="intercellSpacing" width="4" height="230"/>
@@ -1634,7 +1502,6 @@ CQ
                     <textField verticalHuggingPriority="750" id="381">
                         <rect key="frame" x="159" y="313" width="213" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="2558">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1644,7 +1511,6 @@ CQ
                     <button verticalHuggingPriority="750" id="392">
                         <rect key="frame" x="296" y="12" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Select" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="2559">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1659,7 +1525,6 @@ DQ
                     <button verticalHuggingPriority="750" id="393">
                         <rect key="frame" x="49" y="306" width="107" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Search again" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="2560">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
@@ -1671,7 +1536,6 @@ DQ
                     <textField verticalHuggingPriority="750" id="394">
                         <rect key="frame" x="17" y="365" width="284" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="You can refine the title to use for the IMDB-search, or directly enter an IMDB-number or URL to use:" id="2561">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1681,12 +1545,10 @@ DQ
                     <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="396">
                         <rect key="frame" x="30" y="313" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <animations/>
                     </progressIndicator>
                     <textField verticalHuggingPriority="750" id="398">
                         <rect key="frame" x="30" y="60" width="342" height="22"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="2562">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1701,9 +1563,8 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="383">
-                                    <rect key="frame" x="0.0" y="0.0" width="340" height="181"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="340" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -1726,25 +1587,20 @@ DQ
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <animations/>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <animations/>
-                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="2599">
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2599">
                             <rect key="frame" x="-100" y="-100" width="325" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2598">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2598">
                             <rect key="frame" x="-30" y="1" width="15" height="181"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                     </scrollView>
                     <button verticalHuggingPriority="750" id="732">
                         <rect key="frame" x="214" y="12" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="2563">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1756,7 +1612,6 @@ DQ
                     <button id="2635">
                         <rect key="frame" x="302" y="365" width="70" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <animations/>
                         <buttonCell key="cell" type="square" title="Open IMDb" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2636">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
@@ -1768,7 +1623,6 @@ DQ
                     <textField verticalHuggingPriority="750" id="2714">
                         <rect key="frame" x="19" y="12" width="193" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="IMDb is a trademark of &quot;IMDb.com, Inc.&quot;. All contents and data fetched from IMDb.com is under copyright © IMDb.com, Inc." id="2715">
                             <font key="font" metaFont="system" size="8"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1776,7 +1630,6 @@ DQ
                         </textFieldCell>
                     </textField>
                 </subviews>
-                <animations/>
             </view>
         </window>
         <arrayController mode="entity" entityName="File" automaticallyPreparesContent="YES" id="486" userLabel="MovieFiles Array Controller">
@@ -1801,12 +1654,12 @@ DQ
                 <string>@sum.length</string>
             </declaredKeys>
             <connections>
+                <binding destination="-2" name="managedObjectContext" keyPath="managedObjectContext" id="493"/>
                 <binding destination="92" name="contentSet" keyPath="selection.files" id="497">
                     <dictionary key="options">
                         <bool key="NSDeletesObjectsOnRemove" value="YES"/>
                     </dictionary>
                 </binding>
-                <binding destination="-2" name="managedObjectContext" keyPath="managedObjectContext" id="493"/>
             </connections>
         </arrayController>
         <window title="ProgressSheet" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2600">
@@ -1821,12 +1674,10 @@ DQ
                     <progressIndicator verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="bar" id="2602">
                         <rect key="frame" x="18" y="16" width="263" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <animations/>
                     </progressIndicator>
                     <textField verticalHuggingPriority="750" id="2603">
                         <rect key="frame" x="17" y="44" width="265" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Please wait while the operation proceeds:" id="2604">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1834,7 +1685,6 @@ DQ
                         </textFieldCell>
                     </textField>
                 </subviews>
-                <animations/>
             </view>
         </window>
         <customObject id="2693" customClass="IMDBSheetController">
@@ -1853,14 +1703,13 @@ DQ
         <view id="262">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
             <autoresizingMask key="autoresizingMask"/>
-            <animations/>
         </view>
     </objects>
     <resources>
-        <image name="F5E4475E-E501-4B43-959E-44049F2365C9" width="17" height="17">
+        <image name="40A9BD79-258B-412A-BCEC-C25A9137D2C2" width="17" height="17">
             <mutableData key="keyedArchiveRepresentation">
-YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
-GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
+YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
+GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
 c1dOU0NvbG9ygAKADRIgwAAAgAOAC1h7MTcsIDE3fdIVChYYWk5TLm9iamVjdHOhF4AEgArSFQoaHaIb
 HIAFgAaACRAA0iAKISJfEBROU1RJRkZSZXByZXNlbnRhdGlvboAHgAhPESB8TU0AKgAABA6AACBQOCQW
 DQeEQmBAYAgIBAl/v5/PGFRWLReFCkQhQqCkLgEeq5kOs3xiTQoFwMIAMBgUGgYDgYJA4JBQRnwwEQ7h
@@ -2002,12 +1851,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAABtbHVjAAAAAAAAAAIAAAAMZW5VUwAAABIAAAAoZGVERQAAABIAAAAoAEMAaQBuAGUAbQBhACAA
 SABEAABtbW9kAAAAAAAABhAAAJIjAgm8pMG9/4AAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmln
 aHQgQXBwbGUsIEluYy4sIDIwMDkA0iUmJyhaJGNsYXNzbmFtZVgkY2xhc3Nlc18QEE5TQml0bWFwSW1h
-Z2VSZXCjKSorXxAQTlNCaXRtYXBJbWFnZVJlcFpOU0ltYWdlUmVwWE5TT2JqZWN00iUmLS5XTlNBcnJh
-eaItK9IlJjAxXk5TTXV0YWJsZUFycmF5ozAtK9MzNAo1NjdXTlNXaGl0ZVxOU0NvbG9yU3BhY2VEMCAw
-ABADgAzSJSY5OldOU0NvbG9yojkr0iUmPD1XTlNJbWFnZaI8K18QD05TS2V5ZWRBcmNoaXZlctFAQVRy
-b290gAEACAARABoAIwAtADIANwBGAEwAVwBeAGUAcgB5AIEAgwCFAIoAjACOAJcAnACnAKkAqwCtALIA
-tQC3ALkAuwC9AMIA2QDbAN0hXSFiIW0hdiGJIY0hoCGrIbQhuSHBIcQhySHYIdwh4yHrIfgh/SH/IgEi
-BiIOIhEiFiIeIiEiMyI2IjsAAAAAAAACAQAAAAAAAABCAAAAAAAAAAAAAAAAAAAiPQ
+Z2VSZXCjJykqWk5TSW1hZ2VSZXBYTlNPYmplY3TSJSYsLVdOU0FycmF5oiwq0iUmLzBeTlNNdXRhYmxl
+QXJyYXmjLywq0zIzCjQ1NldOU1doaXRlXE5TQ29sb3JTcGFjZUQwIDAAEAOADNIlJjg5V05TQ29sb3Ki
+OCrSJSY7PFdOU0ltYWdlojsqXxAPTlNLZXllZEFyY2hpdmVy0T9AVHJvb3SAAQAIABEAGgAjAC0AMgA3
+AEYATABXAF4AZQByAHkAgQCDAIUAigCMAI4AlwCcAKcAqQCrAK0AsgC1ALcAuQC7AL0AwgDZANsA3SFd
+IWIhbSF2IYkhjSGYIaEhpiGuIbEhtiHFIckh0CHYIeUh6iHsIe4h8yH7If4iAyILIg4iICIjIigAAAAA
+AAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAAiKg
 </mutableData>
         </image>
         <image name="NSAddTemplate" width="11" height="11"/>
