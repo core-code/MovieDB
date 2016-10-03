@@ -88,7 +88,7 @@ NSDocumentController *sharedDocumentController;
 
 
 
-	CheckAndReportCrashes(@"crashreports@corecode.at", @[@"ValueTransformer", @"[Movie", @"[IMDB", @"[Info", @"[SU", @"[NSException", @"uncaught exception"]);
+	CheckAndReportCrashes(@"crashreports@corecode.io", @[@"ValueTransformer", @"[Movie", @"[IMDB", @"[Info", @"[SU", @"[NSException", @"uncaught exception"]);
 
 
 

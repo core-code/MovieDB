@@ -25,7 +25,7 @@ help finish the app.
 **DISCLAIMER:**
 
 MovieDB can fetch movie information from
-[www.imdb.com](http://www.opensource.org/licenses/mit-license.php), the
+[www.imdb.com](https://opensource.org/licenses/mit-license.php), the
 website from *IMDb.com, Inc*..
 MovieDB and its authors are not in any way affiliated with or endorsed
 by *IMDb.com, Inc.*.
@@ -38,14 +38,14 @@ without permission.
 
 **Website:**
 
-[www.corecode.at/moviedb](https://www.corecode.at/moviedb/)  
+[www.corecode.io/moviedb](https://www.corecode.io/moviedb/)  
 
 
 **License & Cost:**
 
 MovieDB is completely free of charge and the source code is licensed
 under the [Open Source "MIT
-License"](http://www.opensource.org/licenses/mit-license.php).  
+License"](https://opensource.org/licenses/mit-license.php).  
 
 
 **Usage:**
