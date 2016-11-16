@@ -12,6 +12,8 @@ do
 		rm -rf Headers
 		rm -rf PrivateHeaders
 		rm -rf Resources
+		rm -rf XPCServices
+		rm -rf Modules
 		rm -rf Versions/Current
 		rm -rf "${dir/.framework/}"
 
@@ -21,14 +23,28 @@ do
 
 
 		ln -s Versions/Current/"${dir/.framework/}" "${dir/.framework/}"
+
 		if [ -d Versions/Current/PrivateHeaders ];
 		then
 			ln -s Versions/Current/PrivateHeaders PrivateHeaders
 		fi;
-		ln -s Versions/Current/Headers Headers
-		ln -s Versions/Current/Resources Resources
-		
-		
+		if [ -d Versions/Current/Headers ];
+		then
+			ln -s Versions/Current/Headers Headers
+		fi;
+		if [ -d Versions/Current/Resources ];
+		then
+			ln -s Versions/Current/Resources Resources
+		fi;
+		if [ -d Versions/Current/XPCServices ];
+		then
+			ln -s Versions/Current/XPCServices XPCServices
+		fi;	
+		if [ -d Versions/Current/Modules ];
+		then
+			ln -s Versions/Current/Modules Modules
+		fi;	
+
 		cd ..
 	fi;
 done;
