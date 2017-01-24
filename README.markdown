@@ -84,7 +84,7 @@ entry.
 
 **License and Disclaimer:**
 
-Copyright (c) 2005 - 2012 CoreCode
+Copyright © 2017 CoreCode Limited
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the

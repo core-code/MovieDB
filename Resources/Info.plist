@@ -105,7 +105,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2016 CoreCode Limited.</string>
+	<string>Copyright © 2017 CoreCode Limited.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
